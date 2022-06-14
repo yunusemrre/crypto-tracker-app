@@ -26,4 +26,12 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>
 
         return binding.root
     }
+
+    fun showProgressDialog(){
+        (requireActivity() as BaseActivity<*,*>).showProgressDialog()
+    }
+
+    fun hideProgressDialog(){
+        (requireActivity() as BaseActivity<*,*>).hideProgressDialog()
+    }
 }

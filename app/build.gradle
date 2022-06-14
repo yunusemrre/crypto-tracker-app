@@ -52,6 +52,8 @@ dependencies {
 
     kapt allkapt.base
     kaptTest allkapt.base
+    kapt allkapt.room
+    kaptTest allkapt.room
 
     testImplementation commonTest
     androidTestImplementation commonInstrumentationTest
@@ -62,6 +64,7 @@ dependencies {
     implementation di
     implementation navigation
     implementation localstorage.datastorePref
+    implementation localstorage.room.base
     implementation common.image
     implementation common.log
     implementation network.request

@@ -6,10 +6,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_home_crypto_list"
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rv_home_crypto_list"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"/>-->
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_coin_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+
+        </com.google.android.material.textview.MaterialTextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
