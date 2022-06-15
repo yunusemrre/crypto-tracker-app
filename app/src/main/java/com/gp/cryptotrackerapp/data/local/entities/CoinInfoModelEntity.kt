@@ -5,8 +5,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Entity model of coin info
+ */
 @Entity(tableName = "cryptos")
-data class CoinListModel(
+data class CoinInfoModelEntity(
     @PrimaryKey
     @NonNull
     var id: String,

@@ -5,13 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.gp.cryptotrackerapp.data.local.dao.CryptoDAO
-import com.gp.cryptotrackerapp.data.local.entities.CoinListModel
-import kotlinx.coroutines.DelicateCoroutinesApi
+import com.gp.cryptotrackerapp.data.local.entities.CoinInfoModelEntity
+import com.gp.cryptotrackerapp.data.local.entities.CoinMaxMinAlertEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [CoinListModel::class], version = 1)
+@Database(entities = [CoinInfoModelEntity::class, CoinMaxMinAlertEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun cryptoDao(): CryptoDAO
@@ -39,15 +39,15 @@ abstract class AppDatabase : RoomDatabase() {
                 .build()
     }
 
-    private fun populateInitialData(){
+    private fun populateInitialData() {
         GlobalScope.launch(Dispatchers.IO) {
-            if(cryptoDao().getCryptoCount() == 0){
+            if (cryptoDao().getCoinsCount() == 0) {
                 runInTransaction {
                     cryptoDao().insertCryptos(
                         mutableListOf(
-                            CoinListModel(id = "bitcoin", name = "Bitcoin", symbol = "BTC"),
-                            CoinListModel(id = "ethereum", name = "Ethereum", symbol = "ETH"),
-                            CoinListModel(id = "ripple", name = "XRP", symbol = "XRP"),
+                            CoinInfoModelEntity(id = "bitcoin", name = "Bitcoin", symbol = "BTC"),
+                            CoinInfoModelEntity(id = "ethereum", name = "Ethereum", symbol = "ETH"),
+                            CoinInfoModelEntity(id = "ripple", name = "XRP", symbol = "XRP"),
                         )
                     )
                 }

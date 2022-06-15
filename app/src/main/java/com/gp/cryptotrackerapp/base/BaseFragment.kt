@@ -9,29 +9,33 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
-abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>
-    (@LayoutRes private val layoutId: Int) : Fragment(layoutId) {
+abstract class BaseFragment
+<B : ViewDataBinding,
+        VM : BaseViewModel> : Fragment() {
 
     abstract val viewModel: VM
     lateinit var binding: B
+
+    @get:LayoutRes
+    abstract val layoutId: Int
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(layoutInflater,layoutId,container,false)
+        binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 //        binding.setVariable(BR.viewModel,this.viewModel)
 
         return binding.root
     }
 
-    fun showProgressDialog(){
-        (requireActivity() as BaseActivity<*,*>).showProgressDialog()
+    fun showProgressDialog() {
+        (requireActivity() as BaseActivity<*, *>).showProgressDialog()
     }
 
-    fun hideProgressDialog(){
-        (requireActivity() as BaseActivity<*,*>).hideProgressDialog()
+    fun hideProgressDialog() {
+        (requireActivity() as BaseActivity<*, *>).hideProgressDialog()
     }
 }

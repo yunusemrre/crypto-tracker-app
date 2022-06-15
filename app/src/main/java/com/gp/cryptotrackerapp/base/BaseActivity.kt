@@ -29,6 +29,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>
         binding.lifecycleOwner = this@BaseActivity
 //        binding.setVariable(BR.viewModel,this.viewModel)
 
+
         init(savedInstanceState)
     }
 

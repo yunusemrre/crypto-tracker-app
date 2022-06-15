@@ -11,7 +11,7 @@ abstract class BaseViewModel : ViewModel(){
     /**
      * Base method for Backend Api, returns the API response or error message.
      */
-    fun <T> makeNetworkRequest(
+    fun <T> makeRequest(
         requestFunc: suspend () -> ResultWrapper<T>,
         onSuccess: ((value: T) -> Unit)? = null,
         onFail: ((value: IException) -> Unit)? = null
@@ -27,4 +27,5 @@ abstract class BaseViewModel : ViewModel(){
             }
         }
     }
+
 }

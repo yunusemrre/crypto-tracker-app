@@ -19,26 +19,27 @@ ext {
     ]
 
     version = [
-            androidKtx         : '1.7.0',
-            appCompat          : '1.4.1',
-            constraintlayout   : '2.1.3',
-            coroutines         : '1.6.0',
-            datastore          : '1.0.0',
-            gradle             : '7.1.2',
-            hilt               : '2.38.1',
-            room               : '2.4.2',
-            junit              : '4.13.2',
-            lifecycle          : '2.4.1',
-            lifecycleExtensions: '2.2.0',
-            lottie             : '5.0.3',
-            material           : '1.6.0',
-            navigation         : '2.4.2',
-            okhttp             : '4.9.3',
-            picasso            : '2.71828',
-            retrofit           : '2.9.0',
-            testEspresso       : '3.4.0',
-            testExtJunit       : '1.1.3',
-            timber             : '5.0.1',
+            androidKtx          : '1.7.0',
+            appCompat           : '1.4.1',
+            constraintlayout    : '2.1.3',
+            coroutines          : '1.6.0',
+            customMaterialDialog: '3.3.0',
+            datastore           : '1.0.0',
+            gradle              : '7.1.2',
+            hilt                : '2.38.1',
+            room                : '2.4.2',
+            junit               : '4.13.2',
+            lifecycle           : '2.4.1',
+            lifecycleExtensions : '2.2.0',
+            lottie              : '5.0.3',
+            material            : '1.6.0',
+            navigation          : '2.4.2',
+            okhttp              : '4.9.3',
+            picasso             : '2.71828',
+            retrofit            : '2.9.0',
+            testEspresso        : '3.4.0',
+            testExtJunit        : '1.1.3',
+            timber              : '5.0.1',
     ]
 
     dependency = [
@@ -55,8 +56,10 @@ ext {
             ],
 
             common = [
-                    image: "com.squareup.picasso:picasso:$version.picasso",
-                    log  : "com.jakewharton.timber:timber:$version.timber"
+                    image : "com.squareup.picasso:picasso:$version.picasso",
+                    log   : "com.jakewharton.timber:timber:$version.timber",
+                    dialog: "com.afollestad.material-dialogs:input:$version.customMaterialDialog"
+
             ],
 
             lifecycle = [

@@ -67,6 +67,7 @@ dependencies {
     implementation localstorage.room.base
     implementation common.image
     implementation common.log
+    implementation common.dialog
     implementation network.request
     implementation network.converter
     implementation design.material

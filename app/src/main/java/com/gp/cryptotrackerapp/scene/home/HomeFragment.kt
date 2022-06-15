@@ -1,52 +1,71 @@
 package com.gp.cryptotrackerapp.scene.home
 
 import android.os.Bundle
-import android.util.Log
+import android.text.InputType
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 import com.gp.cryptotrackerapp.R
+import com.gp.cryptotrackerapp.adapter.CoinListAdapter
+import com.gp.cryptotrackerapp.adapter.CoinListAdapterListener
 import com.gp.cryptotrackerapp.base.BaseFragment
+import com.gp.cryptotrackerapp.data.model.CoinInfo.CoinInfoModel
 import com.gp.cryptotrackerapp.data.model.common.Resource
-import com.gp.cryptotrackerapp.databinding.FragmentHomeBinding
+import com.gp.cryptotrackerapp.databinding.FragmentCoinListBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
-class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
+class HomeFragment : BaseFragment<FragmentCoinListBinding, HomeViewModel>() {
 
     override val viewModel: HomeViewModel by viewModels()
+    override val layoutId: Int = R.layout.fragment_coin_list
+
+    lateinit var adapter : CoinListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initObservers()
-        getCoinList()
+        initializeAdapter()
+        getCoinData()
     }
 
-    private fun initObservers(){
+    private fun initObservers() {
 
-        viewModel.coinList.observe(viewLifecycleOwner){ result ->
+        viewModel.coinListData.observe(viewLifecycleOwner){ result ->
             when(result.status){
                 Resource.Status.SUCCESS -> {
-                    hideProgressDialog()
-                    Toast.makeText(requireContext(),result.data?.get(2)?.name,Toast.LENGTH_LONG).show()
-                    Timber.i(result.data?.size.toString())
+                    result.data?.let {
+                        updateCoinListAdapter(it)
+                    }
                 }
                 Resource.Status.LOADING -> {
 
                 }
                 Resource.Status.ERROR -> {
-                    hideProgressDialog()
+
                 }
             }
         }
-
     }
 
-    private fun getCoinList(){
-        showProgressDialog()
+    private fun getCoinData() {
         viewModel.getCoinList()
     }
 
+    private fun initializeAdapter(){
+        adapter = CoinListAdapter()
+        adapter.listener = object : CoinListAdapterListener {
+            override fun onSelect(id: String) {
+
+            }
+        }
+        binding.rvHomeCryptoList.adapter = adapter
+    }
+
+    private fun updateCoinListAdapter(coinInfo : CoinInfoModel) {
+        adapter.setData(coinInfo)
+    }
 }
