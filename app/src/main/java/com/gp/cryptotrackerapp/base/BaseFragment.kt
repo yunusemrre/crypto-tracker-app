@@ -8,6 +8,8 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 
 abstract class BaseFragment
 <B : ViewDataBinding,
@@ -29,6 +31,10 @@ abstract class BaseFragment
 //        binding.setVariable(BR.viewModel,this.viewModel)
 
         return binding.root
+    }
+
+    fun navigateFragment(navDirections: NavDirections){
+        findNavController().navigate(navDirections)
     }
 
     fun showProgressDialog() {

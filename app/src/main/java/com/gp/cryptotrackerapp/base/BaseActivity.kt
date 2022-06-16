@@ -26,7 +26,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, layoutId)
-        binding.lifecycleOwner = this@BaseActivity
+        binding.lifecycleOwner = this
 //        binding.setVariable(BR.viewModel,this.viewModel)
 
 

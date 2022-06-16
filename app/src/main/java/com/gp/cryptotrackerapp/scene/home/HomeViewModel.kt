@@ -17,9 +17,6 @@ class HomeViewModel @Inject constructor(
     private val cryptoServiceRepository: CryptoServiceRepository
 ) : BaseViewModel() {
 
-//    private val _coinNamesList = MutableLiveData<Resource<List<CoinInfoModel>>>()
-//    val coinNameList: LiveData<Resource<List<CoinInfoModel>>> get() = _coinNamesList
-
     private val _coinListData = MutableLiveData<Resource<CoinInfoModel>>()
     val coinListData: LiveData<Resource<CoinInfoModel>> get() = _coinListData
 
@@ -29,14 +26,14 @@ class HomeViewModel @Inject constructor(
                 cryptoServiceRepository.getCoinList() // from database
             },
             onSuccess = {
-                Timber.d("$this")
                 it.toIUModelFromEntity().let { res ->
-                    val idList = mutableListOf<String>()
                     res.forEach { coinInfo ->
-                        idList.add(coinInfo.id.toString())
+                        coinInfo.id?.let { id ->
+                            getCoinCurrentData(id)
+                        }
                     }
-                    getCoinCurrentData(idList)
                 }
+                Timber.d("$this")
             },
             onFail = {
                 Timber.d("$this")
@@ -45,27 +42,24 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    fun getCoinCurrentData(list: List<String>) {
-        list.forEach { coin ->
-            makeRequest(
-                requestFunc = {
-                    cryptoServiceRepository.getCoinCurrentData(coin)
-                },
-                onSuccess = {
-                    _coinListData.value = Resource.success(it.toIUModel())
-                },
-                onFail = {
-                    _coinListData.value = Resource.error(it.getMsg().toString(),null)
-                }
-            )
-        }
-
-    }
-
-    fun setAlertValuesForCoin(id: String, max: Float, min: Float){
+    private fun getCoinCurrentData(id: String) {
         makeRequest(
             requestFunc = {
-                cryptoServiceRepository.setAlertValuesForCoin(id,max,min)
+                cryptoServiceRepository.getCoinCurrentData(id)
+            },
+            onSuccess = {
+                _coinListData.value = Resource.success(it.toIUModel())
+            },
+            onFail = {
+                _coinListData.value = Resource.error(it.getMsg().toString(), null)
+            }
+        )
+    }
+
+    fun setAlertValuesForCoin(id: String, max: Float, min: Float) {
+        makeRequest(
+            requestFunc = {
+                cryptoServiceRepository.setAlertValuesForCoin(id, max, min)
             },
             onSuccess = {
                 Timber.i(it.toString())

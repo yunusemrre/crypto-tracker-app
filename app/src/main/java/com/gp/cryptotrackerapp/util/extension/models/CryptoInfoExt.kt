@@ -1,8 +1,12 @@
 package com.gp.cryptotrackerapp.util.extension.models
 
 import com.gp.cryptotrackerapp.data.local.entities.CoinInfoModelEntity
+import com.gp.cryptotrackerapp.data.local.entities.CoinMaxMinAlertEntity
+import com.gp.cryptotrackerapp.data.model.CoinInfo.CoinHistoryModel
 import com.gp.cryptotrackerapp.data.model.CoinInfo.CoinInfoModel
+import com.gp.cryptotrackerapp.data.remote.model.CoinDataHistoryRemoteModel
 import com.gp.cryptotrackerapp.data.remote.model.CoinInfoRemoteModel
+import kotlin.math.max
 
 /**
  * [CoinInfoModelEntity] to [CoinInfoModel]
@@ -56,6 +60,29 @@ fun List<CoinInfoRemoteModel>.toIUModelFromRemote(): List<CoinInfoModel>{
                 name = it.name,
                 symbol = it.name,
                 marketData = it.marketData
+            )
+        )
+    }
+    return result
+}
+
+/**
+ * [Coin]
+ */
+fun CoinDataHistoryRemoteModel.toUIModel(): CoinHistoryModel {
+    return CoinHistoryModel(
+        prices = this.prices
+    )
+}
+
+fun List<CoinMaxMinAlertEntity>.toIUFromMaxMin(): List<CoinInfoModel>{
+    val result = mutableListOf<CoinInfoModel>()
+    this.forEach {
+        result.add(
+            CoinInfoModel(
+                id = it.id,
+                maxAlert = it.maxVal,
+                minAlert = it.minVal
             )
         )
     }

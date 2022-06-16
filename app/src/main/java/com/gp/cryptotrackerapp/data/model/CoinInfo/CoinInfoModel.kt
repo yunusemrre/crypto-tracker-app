@@ -7,5 +7,7 @@ data class CoinInfoModel(
     var id: String? = null,
     var name: String? = null,
     var symbol: String? = null,
-    var marketData: MarketDataModel? = null
+    var marketData: MarketDataModel? = null,
+    var maxAlert: Float? = null,
+    var minAlert: Float? = null
 )

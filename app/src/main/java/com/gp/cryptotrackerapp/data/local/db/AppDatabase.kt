@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.gp.cryptotrackerapp.data.local.dao.CryptoDAO
+import com.gp.cryptotrackerapp.data.local.dao.converters.DateConverters
 import com.gp.cryptotrackerapp.data.local.entities.CoinInfoModelEntity
 import com.gp.cryptotrackerapp.data.local.entities.CoinMaxMinAlertEntity
 import kotlinx.coroutines.Dispatchers
@@ -12,6 +14,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Database(entities = [CoinInfoModelEntity::class, CoinMaxMinAlertEntity::class], version = 1)
+@TypeConverters(DateConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun cryptoDao(): CryptoDAO
@@ -43,7 +46,7 @@ abstract class AppDatabase : RoomDatabase() {
         GlobalScope.launch(Dispatchers.IO) {
             if (cryptoDao().getCoinsCount() == 0) {
                 runInTransaction {
-                    cryptoDao().insertCryptos(
+                    cryptoDao().insertCoinsInfo(
                         mutableListOf(
                             CoinInfoModelEntity(id = "bitcoin", name = "Bitcoin", symbol = "BTC"),
                             CoinInfoModelEntity(id = "ethereum", name = "Ethereum", symbol = "ETH"),

@@ -14,13 +14,39 @@ class CoinListAdapter() :
     private var coinList = mutableListOf<CoinInfoModel>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(coinInfo : CoinInfoModel){
-        val newList = coinList.filter {
-            coinInfo.id != it.id
-        } as ArrayList<CoinInfoModel>
-        newList.add(coinInfo)
-        coinList = newList
-        notifyDataSetChanged()
+    fun setData(coinInfo: CoinInfoModel) {
+        coinList.firstOrNull {
+            coinInfo.id == it.id
+        }?.let { //if exist then change info
+            coinList.forEachIndexed { index, item ->
+                if (item.id == coinInfo.id) {
+                    item.marketData = coinInfo.marketData
+                    notifyItemChanged(index)
+                }
+            }
+        }?.run { // add item
+            coinList.add(coinInfo)
+        }
+
+        //region delete
+        //        val newList = coinList.filter {
+//            coinInfo.id != it.id
+//        } as ArrayList<CoinInfoModel>
+//        newList.add(coinInfo)
+//        coinList = newList
+//        notifyDataSetChanged()
+
+        /**
+         *             coinList.forEach { item ->
+        if (item.id == coinInfo.id) {
+        item.marketData = coinInfo.marketData
+        notifyItemChanged(
+        coinList.indexOf(item)
+        )
+        }
+        }
+         */
+        //endregion
     }
 
     override fun onCreateViewHolder(
@@ -37,7 +63,7 @@ class CoinListAdapter() :
     }
 
     override fun onBindViewHolder(holder: CryptoInfoHolder, position: Int) =
-        holder.bind(coinList[position],listener)
+        holder.bind(coinList[position], listener)
 
     override fun getItemCount(): Int = coinList.size
 
@@ -48,8 +74,12 @@ class CoinListAdapter() :
             binding.mtvItemCoinName.text = item.name
             binding.mtvItemCoinSymbol.text = item.symbol
 
-            binding.llItemContainer.setOnClickListener{
+            binding.llItemContainer.setOnClickListener {
                 listener.onSelect(item.id.toString())
+            }
+
+            binding.cvCoinAlertValue.setOnClickListener{
+                listener.onAlert(item.id.toString())
             }
         }
     }
@@ -57,4 +87,5 @@ class CoinListAdapter() :
 
 interface CoinListAdapterListener {
     fun onSelect(id: String)
+    fun onAlert(id: String)
 }
