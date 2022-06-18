@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_item_coin_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_margin="@dimen/dimen_min_4"
+    android:background="@color/colorBackground">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/dimen_8"
+        android:layout_weight="1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_item_coin_currency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_weight="1">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_item_coin_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="BTC"
+                android:textAllCaps="true"
+                android:gravity="center"
+                style="@style/TextAppearance.CT.Body3" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_item_coin_currency"
+                style="@style/TextAppearance.CT.Sub1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=" / USD"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/mtv_item_coin_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_item_coin_volume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hacim xxx"
+            style="@style/TextAppearance.CT.Sub2"
+            app:layout_constraintTop_toBottomOf="@+id/ll_item_coin_currency"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:layout_margin="@dimen/dimen_8"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_item_coin_last_val"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="$1231231"
+            android:layout_margin="@dimen/dimen_2"
+            style="@style/TextAppearance.CT.Body1"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_item_coin_last_val_try"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="tl12321421312"
+            android:layout_margin="@dimen/dimen_2"
+            style="@style/TextAppearance.CT.Body1"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_item_coin_rate_24"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:layout_margin="@dimen/dimen_8"
+        style="@style/CardViewAppearance.CT.CardViewLight">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_item_coin_rate_24"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="%24"
+            android:gravity="center"
+            style="@style/TextAppearance.CT.Body1"/>
+    </androidx.cardview.widget.CardView>
+
+   <androidx.cardview.widget.CardView
+       android:id="@+id/cv_item_coin_alert"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_weight="1.2"
+       android:layout_margin="@dimen/dimen_8"
+       style="@style/CardViewAppearance.CT.CardViewBlackBorderRounded">
+
+       <androidx.appcompat.widget.AppCompatImageView
+           android:layout_width="28dp"
+           android:layout_height="28dp"
+           android:layout_gravity="center"
+           android:src="@drawable/alert_icon_64"/>
+
+   </androidx.cardview.widget.CardView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

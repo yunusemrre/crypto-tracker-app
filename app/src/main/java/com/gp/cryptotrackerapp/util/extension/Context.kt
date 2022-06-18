@@ -7,10 +7,11 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gp.cryptotrackerapp.R
 import com.gp.cryptotrackerapp.databinding.CustomDialogCoinValBinding
+import java.nio.DoubleBuffer
 
-fun Context.createAlertDialogYesNo(
+fun Context.createCoinAlertDialog(
     coin: String,
-    onPositive: (max: String,min:String) -> Unit
+    onPositive: (max: String?,min:String?) -> Unit
 ): AlertDialog {
     val builder = MaterialAlertDialogBuilder(this)
     val binding: CustomDialogCoinValBinding = DataBindingUtil.inflate(

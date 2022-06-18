@@ -1,9 +1,6 @@
 package com.gp.cryptotrackerapp.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.TypeConverters
+import androidx.room.*
 import com.gp.cryptotrackerapp.data.local.dao.converters.DateConverters
 import com.gp.cryptotrackerapp.data.local.entities.CoinInfoModelEntity
 import com.gp.cryptotrackerapp.data.local.entities.CoinMaxMinAlertEntity
@@ -21,6 +18,12 @@ interface CryptoDAO {
     @Insert
     fun insertMaxMinVal(coinMinMax: CoinMaxMinAlertEntity)
 
+    /**
+     * UPDATE
+     */
+    @Query("UPDATE coin_max_min SET state = :state WHERE entityId = :id")
+    fun updateAlertState(id: Int, state: Boolean)
+
 
     /**
      * LIST
@@ -32,8 +35,11 @@ interface CryptoDAO {
     @Query("SELECT COUNT(id) FROM cryptos")
     fun getCoinsCount(): Int
 
-    @Query("SELECT * FROM coin_max_min WHERE coin_id = :id") //TODO
+    @Query("SELECT * FROM coin_max_min WHERE coin_id = :id ORDER BY set_date DESC")
     fun getCoinAlertHistory(id: String): List<CoinMaxMinAlertEntity>
+
+    @Query("SELECT * FROM coin_max_min WHERE state = :state")
+    fun getCoinAlertHistoryForAll(state: Boolean = true): List<CoinMaxMinAlertEntity>
 
 
 }

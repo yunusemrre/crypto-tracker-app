@@ -33,7 +33,7 @@ ext {
             lifecycleExtensions : '2.2.0',
             lottie              : '5.0.3',
             material            : '1.7.0-alpha01',
-            navigation          : '2.4.1',
+            navigation          : '2.3.0',
             okhttp              : '4.9.3',
             picasso             : '2.71828',
             retrofit            : '2.9.0',

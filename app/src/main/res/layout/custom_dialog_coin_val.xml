@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -11,7 +11,8 @@
             android:id="@+id/mtv_custom_dialog_coin_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"/>
+            android:layout_margin="4dp"
+            style="@style/TextAppearance.CT.Headline6"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -25,7 +26,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="numberDecimal"
-                android:hint="max"/>
+                android:hint="max"
+                style="@style/TextAppearance.CT.EditText"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_custom_dialog_min"
@@ -33,7 +35,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:layout_weight="1"
-                android:hint="min"/>
+                android:hint="min"
+                style="@style/TextAppearance.CT.EditText"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -51,7 +54,8 @@
                 android:layout_margin="4dp"
                 android:layout_gravity="end"
                 android:text="Cancel"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                style="@style/ButtonAppearance.CT.Normal"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mtb_custom_dialog_apply"
@@ -60,7 +64,8 @@
                 android:layout_margin="4dp"
                 android:layout_gravity="end"
                 android:text="Set Alert"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                style="@style/ButtonAppearance.CT.Normal"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

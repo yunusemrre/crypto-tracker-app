@@ -1,52 +1,39 @@
 package com.gp.cryptotrackerapp.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.gp.cryptotrackerapp.data.model.CoinInfo.CoinInfoModel
-import com.gp.cryptotrackerapp.databinding.ItemCryptoListBinding
+import com.gp.cryptotrackerapp.R
+import com.gp.cryptotrackerapp.data.model.coininfo.CoinInfoModel
+import com.gp.cryptotrackerapp.databinding.ItemCoinListBinding
+import com.gp.cryptotrackerapp.util.enum.CurrencyEnum
+import com.gp.cryptotrackerapp.util.extension.round2Decimal
 
-class CoinListAdapter() :
+class CoinListAdapter :
     RecyclerView.Adapter<CoinListAdapter.CryptoInfoHolder>() {
 
     lateinit var listener: CoinListAdapterListener
     private var coinList = mutableListOf<CoinInfoModel>()
+    var currency: String = CurrencyEnum.USD.name
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setData(coinInfo: CoinInfoModel) {
-        coinList.firstOrNull {
+
+        val contain = coinList.firstOrNull {
             coinInfo.id == it.id
-        }?.let { //if exist then change info
+        }
+
+        if (contain == null) {
+            coinList.add(coinInfo)
+            notifyDataSetChanged()
+        } else {
             coinList.forEachIndexed { index, item ->
                 if (item.id == coinInfo.id) {
                     item.marketData = coinInfo.marketData
                     notifyItemChanged(index)
                 }
             }
-        }?.run { // add item
-            coinList.add(coinInfo)
         }
-
-        //region delete
-        //        val newList = coinList.filter {
-//            coinInfo.id != it.id
-//        } as ArrayList<CoinInfoModel>
-//        newList.add(coinInfo)
-//        coinList = newList
-//        notifyDataSetChanged()
-
-        /**
-         *             coinList.forEach { item ->
-        if (item.id == coinInfo.id) {
-        item.marketData = coinInfo.marketData
-        notifyItemChanged(
-        coinList.indexOf(item)
-        )
-        }
-        }
-         */
-        //endregion
+        coinList = coinList.sortedBy { it.name }.toMutableList()
     }
 
     override fun onCreateViewHolder(
@@ -54,7 +41,7 @@ class CoinListAdapter() :
         viewType: Int
     ): CryptoInfoHolder {
         return CryptoInfoHolder(
-            ItemCryptoListBinding.inflate(
+            ItemCoinListBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -63,29 +50,55 @@ class CoinListAdapter() :
     }
 
     override fun onBindViewHolder(holder: CryptoInfoHolder, position: Int) =
-        holder.bind(coinList[position], listener)
+        holder.bind(coinList[position], this.currency, listener)
 
     override fun getItemCount(): Int = coinList.size
 
-    class CryptoInfoHolder(private val binding: ItemCryptoListBinding) :
+    class CryptoInfoHolder(private val binding: ItemCoinListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CoinInfoModel, listener: CoinListAdapterListener) {
-            binding.mtvItemCoinId.text = item.id
-            binding.mtvItemCoinName.text = item.name
-            binding.mtvItemCoinSymbol.text = item.symbol
+        fun bind(item: CoinInfoModel, currency: String, listener: CoinListAdapterListener) {
+            binding.mtvItemCoinName.text = item.symbol
+            (item.marketData?.currentPrice?.turkishLira.toString() + " try ").also { binding.mtvItemCoinLastValTry.text = it }
+            binding.mtvItemCoinRate24.text = item.marketData?.priceChangePerc24.toString()
 
-            binding.llItemContainer.setOnClickListener {
-                listener.onSelect(item.id.toString())
+            item.marketData?.priceChangePerc24.toString().let {
+                if(it.startsWith('-')){
+                    binding.cvItemCoinRate24.setBackgroundResource(R.color.softRed)
+                }else{
+                    binding.cvItemCoinRate24.setBackgroundResource(R.color.green300)
+                }
             }
 
-            binding.cvCoinAlertValue.setOnClickListener{
+            when (currency) {
+                CurrencyEnum.USD.name -> {
+                    (item.marketData?.currentPrice?.usd.toString() + " usd").also { binding.mtvItemCoinLastVal.text = it }
+                    ("vol " + item.marketData?.totalVolumeCurrency?.usd?.round2Decimal() + " billion").also { binding.mtvItemCoinVolume.text = it }
+                    (" / "+CurrencyEnum.USD.name).also { binding.mtvItemCoinCurrency.text = it }
+                }
+                CurrencyEnum.EUR.name -> {
+                    (item.marketData?.currentPrice?.euro.toString() + " eur").also { binding.mtvItemCoinLastVal.text = it }
+                    ("vol " + item.marketData?.totalVolumeCurrency?.euro?.round2Decimal() + " billion").also { binding.mtvItemCoinVolume.text = it }
+                    (" / "+CurrencyEnum.EUR.name).also { binding.mtvItemCoinCurrency.text = it }
+                }
+                CurrencyEnum.TRY.name -> {
+                    (item.marketData?.currentPrice?.turkishLira.toString() + " try").also { binding.mtvItemCoinLastVal.text = it }
+                    ("vol " + item.marketData?.totalVolumeCurrency?.turkishLira?.round2Decimal() + " billion").also { binding.mtvItemCoinVolume.text = it }
+                    (" / "+CurrencyEnum.TRY.name).also { binding.mtvItemCoinCurrency.text = it }
+                }
+            }
+
+            binding.cvItemCoinAlert.setOnClickListener {
                 listener.onAlert(item.id.toString())
+            }
+
+            binding.llItemCoinContainer.setOnClickListener {
+                listener.onSelect(item.id.toString(),item.name.toString())
             }
         }
     }
 }
 
 interface CoinListAdapterListener {
-    fun onSelect(id: String)
+    fun onSelect(id: String, name: String)
     fun onAlert(id: String)
 }

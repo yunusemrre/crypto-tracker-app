@@ -20,6 +20,10 @@
         <argument
             android:name="coinId"
             app:argType="string" />
+
+        <argument
+            android:name="coinName"
+            app:argType="string" />
     </fragment>
 
 </navigation>

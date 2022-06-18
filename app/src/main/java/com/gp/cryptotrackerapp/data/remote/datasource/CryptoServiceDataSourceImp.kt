@@ -24,9 +24,9 @@ class CryptoServiceDataSourceImp @Inject constructor(
         }
     }
 
-    override suspend fun getCoinHistory(id:String): ResultWrapper<CoinDataHistoryRemoteModel>{
+    override suspend fun getCoinHistory(id:String,currency:String): ResultWrapper<CoinDataHistoryRemoteModel>{
         return safeApiCallApi {
-            cryptoService.getCoinHistory(id)
+            cryptoService.getCoinHistory(id,currency,"1")
         }
     }
 

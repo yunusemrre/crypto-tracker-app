@@ -4,7 +4,6 @@ import com.gp.cryptotrackerapp.base.BaseRepository
 import com.gp.cryptotrackerapp.data.local.db.AppDatabase
 import com.gp.cryptotrackerapp.data.local.entities.CoinInfoModelEntity
 import com.gp.cryptotrackerapp.data.local.entities.CoinMaxMinAlertEntity
-import com.gp.cryptotrackerapp.data.model.CoinInfo.CoinInfoModel
 import com.gp.cryptotrackerapp.data.model.PingModel
 import com.gp.cryptotrackerapp.data.model.common.ResultWrapper
 import com.gp.cryptotrackerapp.data.remote.datasource.CryptoServiceDataSource
@@ -26,8 +25,8 @@ class CryptoServiceRepositoryImp(
         return cryptoServiceDataSource.getCoinsData(id)
     }
 
-    override suspend fun getCoinHistory(id:String): ResultWrapper<CoinDataHistoryRemoteModel>{
-        return cryptoServiceDataSource.getCoinHistory(id)
+    override suspend fun getCoinHistory(id:String,currency: String): ResultWrapper<CoinDataHistoryRemoteModel>{
+        return cryptoServiceDataSource.getCoinHistory(id,currency)
     }
 
     override suspend fun getCoinList(): ResultWrapper<List<CoinInfoModelEntity>> {
@@ -37,8 +36,8 @@ class CryptoServiceRepositoryImp(
     }
     override suspend fun setAlertValuesForCoin(
         id: String,
-        max: Float,
-        min: Float
+        max: Double,
+        min: Double
     ) : ResultWrapper<Boolean> {
         safeDBCall {
             localDataSource.cryptoDao().insertMaxMinVal(
@@ -58,5 +57,20 @@ class CryptoServiceRepositoryImp(
         return safeDBCall {
             localDataSource.cryptoDao().getCoinAlertHistory(id)
         }
+    }
+
+    override suspend fun getCoinAlertHistoryForAll(): ResultWrapper<List<CoinMaxMinAlertEntity>>{
+        return safeDBCall {
+            localDataSource.cryptoDao().getCoinAlertHistoryForAll()
+        }
+    }
+
+    override suspend fun updateAlertState(id: Int, state: Boolean): ResultWrapper<Boolean> {
+        safeDBCall {
+            localDataSource.cryptoDao().updateAlertState(
+                id,state
+            )
+        }
+        return ResultWrapper.Success(true)
     }
 }

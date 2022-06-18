@@ -17,10 +17,10 @@ data class CoinMaxMinAlertEntity(
     var id: String,
 
     @ColumnInfo(name = "max_value_alert")
-    var maxVal: Float? = null,
+    var maxVal: Double? = null,
 
     @ColumnInfo(name = "min_value_alert")
-    var minVal: Float? = null,
+    var minVal: Double? = null,
 
     @ColumnInfo(name = "set_date")
     var date: Date? = null,

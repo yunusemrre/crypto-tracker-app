@@ -1,25 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/ll_item_coin_alert"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_alert_history_coin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:text="BTC"
+        style="@style/TextAppearance.CT.Body1"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_alert_history_max"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        style="@style/TextAppearance.CT.Body1"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_alert_history_min"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        style="@style/TextAppearance.CT.Body1"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_alert_history_date"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        style="@style/TextAppearance.CT.Sub1"/>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/cb_alert_history_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        style="@style/CheckBoxAppearance.CT.CheckBox"
         android:layout_weight="1"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

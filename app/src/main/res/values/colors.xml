@@ -7,4 +7,47 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#ff4d4d</color>
+    <color name="colorPrimaryDark">#ff3838</color>
+    <color name="colorPrimaryLight">#ffaf40</color>
+    <color name="colorSecondary">#d50000</color>
+    <color name="colorSecondaryDark">#9b0000</color>
+    <color name="colorSecondaryLight">#ff5131</color>
+    <color name="colorAccent">#ffffff</color>
+
+    <color name="colorGreen">#19a146</color>
+    <color name="colorDarkGreen">#008080</color>
+    <color name="colorRed">#ff0000</color>
+    <color name="colorDarkRed">#b64029</color>
+    <color name="map_tile">#8871F3FF</color>
+    <color name="colorCream">#f0e3df</color>
+    <color name="colorGray1">#50c0bdc4</color>
+    <color name="colorGray2">#BFC0BDC4</color>
+    <color name="warm_grey">#7e7e7e</color>
+    <color name="colorGray1nt">#c0bdc4</color>
+    <color name="colorBlack">#000000</color>
+    <color name="common_google_signin_btn_text_dark_focused">#ff000000</color>
+
+    <color name="colorWhitePushKit">#FFFFFF</color>
+    <color name="colorGreen300PushKit">#81C784</color>
+    <color name="colorGray500PushKit">#607D8B</color>
+
+    <color name="whiteBG">#ffffff</color>
+    <color name="blue600">#1E88E5</color>
+    <color name="pink400">#EC407A</color>
+    <color name="yellow800">#F9A825</color>
+    <color name="cyan500">#00BCD4</color>
+    <color name="green300">#81C784</color>
+    <color name="softRed">#F47174</color>
+    <color name="redA400">#FF1744</color>
+    <color name="orange800">#EF6C00</color>
+
+    <color name="viewfinder_text_color4">#C0C0C0</color>
+    <color name="colorGrayNearbyBackGrund">#50c0bdc4</color>
+
+    <color name="colorBody">#02344D</color>
+    <color name="transparent">#80000000</color>
+    <color name="colorBackground">#EDEDED</color>
+
 </resources>

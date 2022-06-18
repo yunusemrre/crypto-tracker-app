@@ -11,6 +11,6 @@ interface CryptoServiceDataSource {
 
     suspend fun getCoinsData(id: String): ResultWrapper<CoinInfoRemoteModel>
 
-    suspend fun getCoinHistory(id: String): ResultWrapper<CoinDataHistoryRemoteModel>
+    suspend fun getCoinHistory(id: String, currency: String): ResultWrapper<CoinDataHistoryRemoteModel>
 
 }

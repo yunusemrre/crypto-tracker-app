@@ -23,6 +23,7 @@ android {
 
         buildConfigField "String", "BASE_URL", BASE_URL
         buildConfigField "Boolean", "ENABLE_LOG", "true"
+        buildConfigField "Long", "SYNC_TIME", "20000L" //every 20 sec
     }
 
     buildTypes {
