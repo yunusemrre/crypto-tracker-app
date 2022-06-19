@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_item_coin_alert"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_alert_history_currency"
+        style="@style/TextAppearance.CT.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="USD" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_alert_history_task"
+        style="@style/TextAppearance.CT.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center_vertical" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_alert_history_value"
+        style="@style/TextAppearance.CT.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center_vertical" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_alert_history_date"
+        style="@style/TextAppearance.CT.Sub1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center_vertical" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/cb_alert_history_state"
+        style="@style/CheckBoxAppearance.CT.CheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center_vertical" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

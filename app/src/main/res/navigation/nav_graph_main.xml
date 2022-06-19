@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/fragmentCoinList">
+
+    <fragment
+        android:id="@+id/fragmentCoinList"
+        android:name="com.gp.cryptotrackerapp.scene.home.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_coinDetailFragment"
+            app:destination="@id/coinDetailFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/coinDetailFragment"
+        android:name="com.gp.cryptotrackerapp.scene.coindetail.CoinDetailFragment"
+        android:label="CoinDetailFragment" >
+        <argument
+            android:name="coinId"
+            app:argType="string" />
+
+        <argument
+            android:name="coinName"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

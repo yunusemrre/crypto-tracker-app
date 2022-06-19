@@ -4,6 +4,8 @@ import com.gp.cryptotrackerapp.base.BaseRemoteDataSource
 import com.gp.cryptotrackerapp.data.model.PingModel
 import com.gp.cryptotrackerapp.data.model.common.ResultWrapper
 import com.gp.cryptotrackerapp.data.remote.api.CryptoService
+import com.gp.cryptotrackerapp.data.remote.model.CoinDataHistoryRemoteModel
+import com.gp.cryptotrackerapp.data.remote.model.CoinInfoRemoteModel
 import javax.inject.Inject
 
 class CryptoServiceDataSourceImp @Inject constructor(
@@ -15,4 +17,18 @@ class CryptoServiceDataSourceImp @Inject constructor(
             cryptoService.pingService()
         }
     }
+
+    override suspend fun getCoinsData(id: String): ResultWrapper<CoinInfoRemoteModel> {
+        return safeApiCallApi {
+            cryptoService.getCoinsData(id)
+        }
+    }
+
+    override suspend fun getCoinHistory(id:String,currency:String): ResultWrapper<CoinDataHistoryRemoteModel>{
+        return safeApiCallApi {
+            cryptoService.getCoinHistory(id,currency,"1")
+        }
+    }
+
+
 }
