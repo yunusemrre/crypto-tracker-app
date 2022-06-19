@@ -9,8 +9,12 @@ import com.gp.cryptotrackerapp.R
 import com.gp.cryptotrackerapp.databinding.CustomDialogCoinValBinding
 import java.nio.DoubleBuffer
 
+/**
+ * Create alert dialog to get max min alert value of related coin
+ */
 fun Context.createCoinAlertDialog(
     coin: String,
+    currency: String,
     onPositive: (max: String?,min:String?) -> Unit
 ): AlertDialog {
     val builder = MaterialAlertDialogBuilder(this)
@@ -24,6 +28,8 @@ fun Context.createCoinAlertDialog(
     val dialog = builder.setView(binding.root).create()
 
     binding.mtvCustomDialogCoinInfo.text = coin
+    binding.mtvCustomDialogCurrencyMax.text = currency
+    binding.mtvCustomDialogCurrencyMin.text = currency
     binding.mtbCustomDialogApply.setOnClickListener{
         val max = binding.etCustomDialogMax.text.toString()
         val min = binding.etCustomDialogMin.text.toString()

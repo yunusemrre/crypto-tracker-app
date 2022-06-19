@@ -1,12 +1,10 @@
 package com.gp.cryptotrackerapp.scene.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.viewModels
-import com.gp.cryptotrackerapp.BuildConfig
 import com.gp.cryptotrackerapp.R
 import com.gp.cryptotrackerapp.adapter.CoinListAdapter
 import com.gp.cryptotrackerapp.adapter.CoinListAdapterListener
@@ -16,8 +14,6 @@ import com.gp.cryptotrackerapp.data.model.common.Resource
 import com.gp.cryptotrackerapp.databinding.FragmentHomeBinding
 import com.gp.cryptotrackerapp.util.extension.createCoinAlertDialog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
-import java.lang.Exception
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
@@ -40,6 +36,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         viewModel.getCoinListContinuously()
     }
 
+    /**
+     * Initialize observers
+     */
     private fun initObservers() {
         viewModel.coinListData.observe(requireActivity()) { result ->
             when (result.status) {
@@ -58,8 +57,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
     }
 
-    private fun initializeListener(){
-        binding.spnHomeCurrency.setSelection(0,false)
+    /**
+     * Initialize listeners
+     */
+    private fun initializeListener() {
+        binding.spnHomeCurrency.setSelection(0, false)
         binding.spnHomeCurrency.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View, i: Int, l: Long) {
@@ -74,18 +76,33 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
     }
 
+    /**
+     * Initialize [CoinListAdapter]
+     */
     private fun initializeAdapter() {
         adapter = CoinListAdapter()
         adapter.listener = object : CoinListAdapterListener {
-            override fun onSelect(id: String,name:String) {
-                navigateFragment(HomeFragmentDirections.actionHomeFragmentToCoinDetailFragment(id,name))
+            override fun onSelect(id: String, name: String) {
+                navigateFragment(
+                    HomeFragmentDirections.actionHomeFragmentToCoinDetailFragment(
+                        id,
+                        name
+                    )
+                )
             }
 
             override fun onAlert(id: String) {
                 requireContext().createCoinAlertDialog(
                     id,
+                    globalCurrency,
                     onPositive = { max, min ->
-                        viewModel.setAlertValuesForCoin(id, max, min)
+                        viewModel.setAlertValuesForCoin(id, max, min, globalCurrency)
+
+                        Toast.makeText(
+                            requireContext(),
+                            "Coin alert is successfully added",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 ).show()
             }
@@ -93,8 +110,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         binding.rvHomeCryptoList.adapter = adapter
     }
 
+    /**
+     * Update [CoinListAdapter] with new market data
+     */
     private fun updateCoinListAdapter(coinInfo: CoinInfoModel) {
-        Log.i("asdfasdf","updated")
         adapter.setData(coinInfo)
     }
 

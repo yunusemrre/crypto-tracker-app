@@ -20,23 +20,61 @@
             android:orientation="horizontal"
             android:layout_margin="4dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_custom_dialog_max"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
-                android:hint="max"
-                style="@style/TextAppearance.CT.EditText"/>
+                android:orientation="horizontal"
+                android:layout_marginEnd="@dimen/dimen_8">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_custom_dialog_min"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_custom_dialog_max"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
+                    android:layout_weight="1"
+                    android:hint="max"
+                    style="@style/TextAppearance.CT.EditText"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_custom_dialog_currency_max"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:layout_gravity="bottom"
+                    android:gravity="center_vertical"
+                    android:text="USD"/>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
                 android:layout_weight="1"
-                android:hint="min"
-                style="@style/TextAppearance.CT.EditText"/>
+                android:orientation="horizontal"
+                android:layout_marginEnd="@dimen/dimen_8">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_custom_dialog_min"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:layout_weight="1"
+                    android:hint="min"
+                    style="@style/TextAppearance.CT.EditText"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_custom_dialog_currency_min"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:layout_gravity="bottom"
+                    android:gravity="center_vertical"
+                    android:text="USD"/>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -25,8 +25,11 @@ class CryptoServiceRepositoryImp(
         return cryptoServiceDataSource.getCoinsData(id)
     }
 
-    override suspend fun getCoinHistory(id:String,currency: String): ResultWrapper<CoinDataHistoryRemoteModel>{
-        return cryptoServiceDataSource.getCoinHistory(id,currency)
+    override suspend fun getCoinHistory(
+        id: String,
+        currency: String
+    ): ResultWrapper<CoinDataHistoryRemoteModel> {
+        return cryptoServiceDataSource.getCoinHistory(id, currency)
     }
 
     override suspend fun getCoinList(): ResultWrapper<List<CoinInfoModelEntity>> {
@@ -34,20 +37,13 @@ class CryptoServiceRepositoryImp(
             localDataSource.cryptoDao().getCoinsInfo()
         }
     }
+
     override suspend fun setAlertValuesForCoin(
-        id: String,
-        max: Double,
-        min: Double
-    ) : ResultWrapper<Boolean> {
+        list: List<CoinMaxMinAlertEntity>
+    ): ResultWrapper<Boolean> {
         safeDBCall {
             localDataSource.cryptoDao().insertMaxMinVal(
-                CoinMaxMinAlertEntity(
-                    id = id,
-                    maxVal = max,
-                    minVal = min,
-                    date = Calendar.getInstance().time,
-                    active = true
-                )
+                list
             )
         }
         return ResultWrapper.Success(true)
@@ -59,7 +55,7 @@ class CryptoServiceRepositoryImp(
         }
     }
 
-    override suspend fun getCoinAlertHistoryForAll(): ResultWrapper<List<CoinMaxMinAlertEntity>>{
+    override suspend fun getCoinAlertHistoryForAll(): ResultWrapper<List<CoinMaxMinAlertEntity>> {
         return safeDBCall {
             localDataSource.cryptoDao().getCoinAlertHistoryForAll()
         }
@@ -68,7 +64,7 @@ class CryptoServiceRepositoryImp(
     override suspend fun updateAlertState(id: Int, state: Boolean): ResultWrapper<Boolean> {
         safeDBCall {
             localDataSource.cryptoDao().updateAlertState(
-                id,state
+                id, state
             )
         }
         return ResultWrapper.Success(true)

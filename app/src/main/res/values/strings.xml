@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Crypto Tracker App</string>
+    <string name="app_name">Crypto Tracker</string>
     
     <string-array name="currency">
         <item>USD</item>

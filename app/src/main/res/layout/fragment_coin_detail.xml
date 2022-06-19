@@ -16,6 +16,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:id="@+id/iv_detail_back"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/back_icon_64"/>
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/mtv_coin_info"
                     style="@style/TextAppearance.CT.Headline6"
@@ -38,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:text="Coin History" />
+                android:text="Coin Value History (live)" />
 
             <com.google.android.material.card.MaterialCardView
                 style="@style/CardViewAppearance.CT.CardViewBlackBorder"
@@ -70,7 +76,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Time"
+                            android:text="Last Updated"
                             android:textStyle="bold" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -105,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:text="User Coin Alert History" />
+                android:text="Coin Alert History" />
 
             <com.google.android.material.card.MaterialCardView
                 style="@style/CardViewAppearance.CT.CardViewBlackBorder"
@@ -129,7 +135,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Name"
+                            android:text="Currency"
                             android:textStyle="bold" />
 
                         <com.google.android.material.textview.MaterialTextView
@@ -137,7 +143,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Max"
+                            android:text="Task"
                             android:textStyle="bold" />
 
                         <com.google.android.material.textview.MaterialTextView
@@ -145,7 +151,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Min"
+                            android:text="Value"
                             android:textStyle="bold" />
 
                         <com.google.android.material.textview.MaterialTextView
@@ -161,7 +167,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Set State"
+                            android:text="Enable"
                             android:textStyle="bold" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -6,8 +6,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
 
-@Entity(tableName = "coin_max_min")
-data class CoinMaxMinAlertEntity(
+@Entity(tableName = "coin_max_min_notification")
+data class  CoinMaxMinAlertEntity(
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -26,5 +26,11 @@ data class CoinMaxMinAlertEntity(
     var date: Date? = null,
 
     @ColumnInfo(name = "state")
-    var active: Boolean? = null
+    var active: Boolean? = null,
+
+    @ColumnInfo(name = "currency")
+    var currency: String? = null,
+
+    @ColumnInfo(name = "is_alerted")
+    var isAlerted: Boolean? = false
 )

@@ -3,6 +3,7 @@ package com.gp.cryptotrackerapp.scene.coindetail
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.gp.cryptotrackerapp.R
 import com.gp.cryptotrackerapp.adapter.CoinAlertHistoryAdapter
@@ -15,11 +16,6 @@ import com.gp.cryptotrackerapp.databinding.FragmentCoinDetailBinding
 import com.gp.cryptotrackerapp.util.enum.CurrencyEnum
 import com.gp.cryptotrackerapp.util.extension.toDoubleDate
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-
 
 @AndroidEntryPoint
 class CoinDetailFragment : BaseFragment<FragmentCoinDetailBinding, CoinDetailViewModel>() {
@@ -29,19 +25,37 @@ class CoinDetailFragment : BaseFragment<FragmentCoinDetailBinding, CoinDetailVie
     private val args: CoinDetailFragmentArgs by navArgs()
 
     private lateinit var coinHistoryAdapter: CoinHistoryAdapter
+    private lateinit var alertHistoryAdapter: CoinAlertHistoryAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initUI()
+        initListener()
         initObservers()
-        getCoinHistories()
+        getCoinData()
     }
 
+    /**
+     * Initialize UI elements
+     */
     private fun initUI() {
         (args.coinName + " / " + globalCurrency).also { binding.mtvCoinInfo.text = it }
+        initializeCoinAlertHistoryAdapter()
     }
 
+    /**
+     * Initialize listeners
+     */
+    private fun initListener() {
+        binding.ivDetailBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    /**
+     * Initialize observers
+     */
     private fun initObservers() {
 
         viewModel.coinDataHistory.observe(viewLifecycleOwner) { res ->
@@ -65,7 +79,7 @@ class CoinDetailFragment : BaseFragment<FragmentCoinDetailBinding, CoinDetailVie
             when (res.status) {
                 Resource.Status.SUCCESS -> {
                     res.data?.let {
-                        initializeCoinAlertHistoryAdapter(it as ArrayList<CoinInfoModel>)
+                        updateAlertHistoryAdapter(it as ArrayList<CoinInfoModel>)
                     }
                     hideProgressDialog()
                 }
@@ -92,13 +106,13 @@ class CoinDetailFragment : BaseFragment<FragmentCoinDetailBinding, CoinDetailVie
                                 }
                                 CurrencyEnum.EUR.name -> {
                                     coinHistoryAdapter.setData(
-                                        coin.marketData?.currentPrice?.turkishLira ?: 0.0,
+                                        coin.marketData?.currentPrice?.euro ?: 0.0,
                                         coin.marketData?.lastUpdate?.toDoubleDate() ?: 0.0
                                     )
                                 }
                                 CurrencyEnum.TRY.name -> {
                                     coinHistoryAdapter.setData(
-                                        coin.marketData?.currentPrice?.euro ?: 0.0,
+                                        coin.marketData?.currentPrice?.turkishLira ?: 0.0,
                                         coin.marketData?.lastUpdate?.toDoubleDate() ?: 0.0
                                     )
                                 }
@@ -116,32 +130,48 @@ class CoinDetailFragment : BaseFragment<FragmentCoinDetailBinding, CoinDetailVie
         }
     }
 
-    private fun getCoinHistories() {
+    /**
+     * Get all coin data by [CoinDetailViewModel]
+     */
+    private fun getCoinData() {
         showProgressDialog()
         args.coinId.let { id ->
             viewModel.getCoinHistory(id, globalCurrency)
             viewModel.getCoinAlertHistory(id)
-            GlobalScope.launch(Dispatchers.IO) {
-                while (true) {
-                    delay(15000)
-                    viewModel.getCoinCurrentData(id)
-                }
-            }
+            viewModel.getCoinCurrentData(id)
         }
     }
 
+    /**
+     * Initialize [CoinHistoryAdapter]
+     */
     private fun initializeCoinHistoryAdapter(prices: ArrayList<ArrayList<Double>>) {
         coinHistoryAdapter = CoinHistoryAdapter()
         binding.rvCoinDetailHistory.adapter = coinHistoryAdapter
         coinHistoryAdapter.setList(prices)
     }
 
-    private fun initializeCoinAlertHistoryAdapter(historyList: ArrayList<CoinInfoModel>) {
-        binding.rvCoinDetailAlertHistory.adapter =
-            CoinAlertHistoryAdapter(historyList, object : CoinAlertHistoryAdapterListener {
-                override fun setAlertState(entityId: Int, state: Boolean) {
-                    viewModel.updateAlertState(entityId, state)
-                }
-            })
+    /**
+     * Initialize [CoinAlertHistoryAdapter]
+     */
+    private fun initializeCoinAlertHistoryAdapter() {
+        alertHistoryAdapter = CoinAlertHistoryAdapter(object : CoinAlertHistoryAdapterListener {
+            override fun setAlertState(entityId: Int, state: Boolean) {
+                viewModel.updateAlertState(entityId, state)
+            }
+        })
+        binding.rvCoinDetailAlertHistory.adapter = alertHistoryAdapter
+    }
+
+    /**
+     * Update [CoinAlertHistoryAdapter] on each update of data change
+     */
+    private fun updateAlertHistoryAdapter(historyList: ArrayList<CoinInfoModel>) {
+        alertHistoryAdapter.setData(historyList)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.cancelJobs()
     }
 }

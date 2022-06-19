@@ -7,7 +7,8 @@ import com.gp.cryptotrackerapp.R
 import com.gp.cryptotrackerapp.data.model.coininfo.CoinInfoModel
 import com.gp.cryptotrackerapp.databinding.ItemCoinListBinding
 import com.gp.cryptotrackerapp.util.enum.CurrencyEnum
-import com.gp.cryptotrackerapp.util.extension.round2Decimal
+import com.gp.cryptotrackerapp.util.extension.round2DecimalVol
+import com.gp.cryptotrackerapp.util.extension.round3Decimal
 
 class CoinListAdapter :
     RecyclerView.Adapter<CoinListAdapter.CryptoInfoHolder>() {
@@ -16,6 +17,11 @@ class CoinListAdapter :
     private var coinList = mutableListOf<CoinInfoModel>()
     var currency: String = CurrencyEnum.USD.name
 
+    /**
+     * Add item as [CoinInfoModel] to adapter data
+     * If data not exist add to [coinList]
+     * If data exist change market data
+     */
     fun setData(coinInfo: CoinInfoModel) {
 
         val contain = coinList.firstOrNull {
@@ -58,32 +64,48 @@ class CoinListAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CoinInfoModel, currency: String, listener: CoinListAdapterListener) {
             binding.mtvItemCoinName.text = item.symbol
-            (item.marketData?.currentPrice?.turkishLira.toString() + " try ").also { binding.mtvItemCoinLastValTry.text = it }
-            binding.mtvItemCoinRate24.text = item.marketData?.priceChangePerc24.toString()
+            (item.marketData?.currentPrice?.turkishLira.toString() + " try ").also {
+                binding.mtvItemCoinLastValTry.text = it
+            }
+            ("% " + item.marketData?.priceChangePerc24?.round3Decimal()).also {
+                binding.mtvItemCoinRate24.text = it
+            }
 
             item.marketData?.priceChangePerc24.toString().let {
-                if(it.startsWith('-')){
+                if (it.startsWith('-')) {
                     binding.cvItemCoinRate24.setBackgroundResource(R.color.softRed)
-                }else{
+                } else {
                     binding.cvItemCoinRate24.setBackgroundResource(R.color.green300)
                 }
             }
 
             when (currency) {
                 CurrencyEnum.USD.name -> {
-                    (item.marketData?.currentPrice?.usd.toString() + " usd").also { binding.mtvItemCoinLastVal.text = it }
-                    ("vol " + item.marketData?.totalVolumeCurrency?.usd?.round2Decimal() + " billion").also { binding.mtvItemCoinVolume.text = it }
-                    (" / "+CurrencyEnum.USD.name).also { binding.mtvItemCoinCurrency.text = it }
+                    (item.marketData?.currentPrice?.usd.toString() + " usd").also {
+                        binding.mtvItemCoinLastVal.text = it
+                    }
+                    ("vol " + item.marketData?.totalVolumeCurrency?.usd?.round2DecimalVol() + " billion").also {
+                        binding.mtvItemCoinVolume.text = it
+                    }
+                    (" / " + CurrencyEnum.USD.name).also { binding.mtvItemCoinCurrency.text = it }
                 }
                 CurrencyEnum.EUR.name -> {
-                    (item.marketData?.currentPrice?.euro.toString() + " eur").also { binding.mtvItemCoinLastVal.text = it }
-                    ("vol " + item.marketData?.totalVolumeCurrency?.euro?.round2Decimal() + " billion").also { binding.mtvItemCoinVolume.text = it }
-                    (" / "+CurrencyEnum.EUR.name).also { binding.mtvItemCoinCurrency.text = it }
+                    (item.marketData?.currentPrice?.euro.toString() + " eur").also {
+                        binding.mtvItemCoinLastVal.text = it
+                    }
+                    ("vol " + item.marketData?.totalVolumeCurrency?.euro?.round2DecimalVol() + " billion").also {
+                        binding.mtvItemCoinVolume.text = it
+                    }
+                    (" / " + CurrencyEnum.EUR.name).also { binding.mtvItemCoinCurrency.text = it }
                 }
                 CurrencyEnum.TRY.name -> {
-                    (item.marketData?.currentPrice?.turkishLira.toString() + " try").also { binding.mtvItemCoinLastVal.text = it }
-                    ("vol " + item.marketData?.totalVolumeCurrency?.turkishLira?.round2Decimal() + " billion").also { binding.mtvItemCoinVolume.text = it }
-                    (" / "+CurrencyEnum.TRY.name).also { binding.mtvItemCoinCurrency.text = it }
+                    (item.marketData?.currentPrice?.turkishLira.toString() + " try").also {
+                        binding.mtvItemCoinLastVal.text = it
+                    }
+                    ("vol " + item.marketData?.totalVolumeCurrency?.turkishLira?.round2DecimalVol() + " billion").also {
+                        binding.mtvItemCoinVolume.text = it
+                    }
+                    (" / " + CurrencyEnum.TRY.name).also { binding.mtvItemCoinCurrency.text = it }
                 }
             }
 
@@ -92,12 +114,15 @@ class CoinListAdapter :
             }
 
             binding.llItemCoinContainer.setOnClickListener {
-                listener.onSelect(item.id.toString(),item.name.toString())
+                listener.onSelect(item.id.toString(), item.name.toString())
             }
         }
     }
 }
 
+/**
+ * Listener for selecting coin and setting alarm
+ */
 interface CoinListAdapterListener {
     fun onSelect(id: String, name: String)
     fun onAlert(id: String)

@@ -42,6 +42,9 @@ abstract class AppDatabase : RoomDatabase() {
                 .build()
     }
 
+    /**
+     * Initialize db with coin data -> BTC, ETH, XRP
+     */
     private fun populateInitialData() {
         GlobalScope.launch(Dispatchers.IO) {
             if (cryptoDao().getCoinsCount() == 0) {

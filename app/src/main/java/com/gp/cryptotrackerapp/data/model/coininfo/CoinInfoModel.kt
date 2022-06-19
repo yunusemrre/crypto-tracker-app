@@ -17,5 +17,6 @@ data class CoinInfoModel(
     var maxAlert: Double? = null,
     var minAlert: Double? = null,
     var insertDate: Date? = null,
-    var active: Boolean? = null
+    var active: Boolean? = null,
+    var currency: String? = null
 )

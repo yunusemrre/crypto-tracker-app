@@ -11,7 +11,7 @@ fun Long.toDateString(): String{
 
 @SuppressLint("SimpleDateFormat")
 fun Date.formatDate(): String{
-    val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+    val format = SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
     return format.format(this)
 }
 

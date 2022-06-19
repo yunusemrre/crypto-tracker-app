@@ -18,13 +18,13 @@ abstract class BaseFragment
 <B : ViewDataBinding,
         VM : BaseViewModel> : Fragment() {
 
-    companion object{
+    companion object {
         var globalCurrency: String = CurrencyEnum.USD.name
     }
-    
+
     abstract val viewModel: VM
     lateinit var binding: B
-    
+
 
     private val mLoadingDialog: CustomProgressDialog by lazy {
         CustomProgressDialog(requireContext())
@@ -45,7 +45,7 @@ abstract class BaseFragment
         return binding.root
     }
 
-    fun navigateFragment(navDirections: NavDirections){
+    fun navigateFragment(navDirections: NavDirections) {
         findNavController().navigate(navDirections)
     }
 

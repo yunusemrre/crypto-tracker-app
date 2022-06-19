@@ -10,6 +10,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/**
+ * Repository [Hilt] module
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
@@ -20,5 +23,5 @@ object RepositoryModule {
         cryptoServiceDataSource: CryptoServiceDataSource,
         roomDatabase: AppDatabase
     ): CryptoServiceRepository =
-        CryptoServiceRepositoryImp(cryptoServiceDataSource,roomDatabase)
+        CryptoServiceRepositoryImp(cryptoServiceDataSource, roomDatabase)
 }

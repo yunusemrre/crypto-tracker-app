@@ -6,13 +6,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gp.cryptotrackerapp.R
 import com.gp.cryptotrackerapp.data.model.coininfo.CoinInfoModel
 import com.gp.cryptotrackerapp.databinding.ItemCoinAlertHistoryBinding
-import com.gp.cryptotrackerapp.util.extension.formatDate
 import com.gp.cryptotrackerapp.util.extension.formatDateSimple
 
+/**
+ * Adapter for user coin alert history
+ */
 class CoinAlertHistoryAdapter(
-    private var coinHistoryList: ArrayList<CoinInfoModel>,
     private var listener: CoinAlertHistoryAdapterListener
 ) : RecyclerView.Adapter<CoinAlertHistoryAdapter.HistoryHolder>() {
+
+    private var coinHistoryList = arrayListOf<CoinInfoModel>()
+
+    /**
+     * Set adapter data
+     */
+    fun setData(data: ArrayList<CoinInfoModel>) {
+        this.coinHistoryList = data
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -40,11 +51,19 @@ class CoinAlertHistoryAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: CoinInfoModel) {
-            binding.mtvAlertHistoryCoin.text = item.id.toString().replaceFirstChar { c -> c.uppercaseChar() }
-            binding.mtvAlertHistoryMax.text = item.maxAlert.toString()
-            binding.mtvAlertHistoryMin.text = item.minAlert.toString()
+            binding.mtvAlertHistoryCurrency.text = item.currency.toString()
+
             binding.mtvAlertHistoryDate.text = item.insertDate?.formatDateSimple()
             binding.cbAlertHistoryState.isChecked = item.active == true
+
+            item.maxAlert?.let {
+                binding.mtvAlertHistoryValue.text = item.maxAlert.toString()
+                binding.mtvAlertHistoryTask.text = "Higher"
+            }
+            item.minAlert?.let {
+                binding.mtvAlertHistoryValue.text = item.minAlert.toString()
+                binding.mtvAlertHistoryTask.text = "Lower"
+            }
 
             if (item.active == true) {
                 binding.llItemCoinAlert.setBackgroundResource(R.color.green300)
@@ -56,9 +75,9 @@ class CoinAlertHistoryAdapter(
                 item.alertEntityId?.let { id ->
                     item.active = state
                     listener.setAlertState(id, state)
-                    if(state){
+                    if (state) {
                         binding.llItemCoinAlert.setBackgroundResource(R.color.green300)
-                    }else{
+                    } else {
                         binding.llItemCoinAlert.setBackgroundResource(R.color.softRed)
                     }
 
@@ -68,6 +87,9 @@ class CoinAlertHistoryAdapter(
     }
 }
 
+/**
+ * Listener for setting alert state
+ */
 interface CoinAlertHistoryAdapterListener {
     fun setAlertState(entityId: Int, state: Boolean)
 }

@@ -66,7 +66,7 @@ fun List<CoinInfoRemoteModel>.toIUModelFromRemote(): List<CoinInfoModel>{
 }
 
 /**
- * [Coin]
+ * [CoinDataHistoryRemoteModel] to [CoinHistoryModel]
  */
 fun CoinDataHistoryRemoteModel.toUIModel(): CoinHistoryModel {
     return CoinHistoryModel(
@@ -74,6 +74,9 @@ fun CoinDataHistoryRemoteModel.toUIModel(): CoinHistoryModel {
     )
 }
 
+/**
+ * List [CoinMaxMinAlertEntity] to List [CoinInfoModel]
+ */
 fun List<CoinMaxMinAlertEntity>.toIUFromMaxMin(): List<CoinInfoModel>{
     val result = mutableListOf<CoinInfoModel>()
     this.forEach {
@@ -84,7 +87,8 @@ fun List<CoinMaxMinAlertEntity>.toIUFromMaxMin(): List<CoinInfoModel>{
                 maxAlert = it.maxVal,
                 minAlert = it.minVal,
                 insertDate = it.date,
-                active = it.active
+                active = it.active,
+                currency = it.currency
             )
         )
     }

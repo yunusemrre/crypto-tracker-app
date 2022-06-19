@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 /**
  * Entity model of coin info
  */
-@Entity(tableName = "cryptos")
+@Entity(tableName = "coin_info")
 data class CoinInfoModelEntity(
     @PrimaryKey
     @NonNull

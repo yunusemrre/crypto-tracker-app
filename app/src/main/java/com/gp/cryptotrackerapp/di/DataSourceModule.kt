@@ -9,6 +9,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/**
+ * Crypto service [Hilt] module
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object DataSourceModule {

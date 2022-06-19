@@ -17,7 +17,7 @@ interface CryptoServiceRepository {
 
     suspend fun getCoinHistory(id:String,currency: String): ResultWrapper<CoinDataHistoryRemoteModel>
 
-    suspend fun setAlertValuesForCoin(id: String, max: Double, min: Double): ResultWrapper<Boolean>
+    suspend fun setAlertValuesForCoin(list: List<CoinMaxMinAlertEntity>): ResultWrapper<Boolean>
 
     suspend fun getCoinAlertHistory(id: String): ResultWrapper<List<CoinMaxMinAlertEntity>>
 

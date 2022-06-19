@@ -9,6 +9,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/**
+ * Room database [Hilt] module
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {

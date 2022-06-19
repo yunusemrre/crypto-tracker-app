@@ -6,7 +6,7 @@ import com.gp.cryptotrackerapp.data.model.common.IException
 import com.gp.cryptotrackerapp.data.model.common.ResultWrapper
 import kotlinx.coroutines.launch
 
-abstract class BaseViewModel : ViewModel(){
+abstract class BaseViewModel : ViewModel() {
 
     /**
      * Base method for Backend Api, returns the API response or error message.

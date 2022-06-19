@@ -1,19 +1,16 @@
 package com.gp.cryptotrackerapp.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.gp.cryptotrackerapp.R
 import com.gp.cryptotrackerapp.databinding.ItemCoinHistoryBinding
+import com.gp.cryptotrackerapp.util.extension.round3Decimal
 import com.gp.cryptotrackerapp.util.extension.toDateString
 import kotlin.math.roundToLong
 
 class CoinHistoryAdapter : RecyclerView.Adapter<CoinHistoryAdapter.HistoryHolder>() {
 
-    lateinit var coinHistoryList: ArrayList<ArrayList<Double>>
+    private lateinit var coinHistoryList: ArrayList<ArrayList<Double>>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryHolder {
         return HistoryHolder(
@@ -25,22 +22,30 @@ class CoinHistoryAdapter : RecyclerView.Adapter<CoinHistoryAdapter.HistoryHolder
         )
     }
 
-    fun setList(list: ArrayList<ArrayList<Double>>){
+    /**
+     * Set adapter data as [ArrayList]
+     */
+    fun setList(list: ArrayList<ArrayList<Double>>) {
         list.reverse()
         this.coinHistoryList = list
         notifyDataSetChanged()
     }
 
-    fun setData(rate: Double, date: Double){
-        this.coinHistoryList.reverse()
-        coinHistoryList.add(
-            arrayListOf(
-                date,
-                rate
+    /**
+     * Add item to adapter data if the date changed
+     */
+    fun setData(rate: Double, date: Double) {
+        if (coinHistoryList.none { date == it[0] }) {
+            this.coinHistoryList.reverse()
+            coinHistoryList.add(
+                arrayListOf(
+                    date,
+                    rate
+                )
             )
-        )
-        this.coinHistoryList.reverse()
-        notifyDataSetChanged()
+            this.coinHistoryList.reverse()
+            notifyDataSetChanged()
+        }
     }
 
     override fun onBindViewHolder(holder: HistoryHolder, position: Int) = holder.bind(
@@ -54,7 +59,7 @@ class CoinHistoryAdapter : RecyclerView.Adapter<CoinHistoryAdapter.HistoryHolder
 
         fun bind(item: ArrayList<Double>) {
             binding.mtvItemCoinHisDate.text = item[0].roundToLong().toDateString()
-            binding.mtvItemCoinHisValue.text = item[1].toString()
+            binding.mtvItemCoinHisValue.text = item[1].round3Decimal()
         }
     }
 }

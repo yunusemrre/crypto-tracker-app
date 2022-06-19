@@ -16,7 +16,11 @@ import androidx.databinding.DataBindingUtil
 import com.gp.cryptotrackerapp.R
 import com.gp.cryptotrackerapp.databinding.CustomProgressDialogBinding
 
-class CustomProgressDialog(private var _context: Context) : Dialog(_context, R.style.LoadingDialogStyle) {
+/**
+ * Custom dialog for loading screen
+ */
+class CustomProgressDialog(private var _context: Context) :
+    Dialog(_context, R.style.LoadingDialogStyle) {
 
     lateinit var binding: CustomProgressDialogBinding
 

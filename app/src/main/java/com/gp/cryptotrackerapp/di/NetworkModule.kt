@@ -13,13 +13,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+/**
+ * Network related [Hilt] module
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideLoggingInterceptor(): HttpLoggingInterceptor{
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = if (BuildConfig.ENABLE_LOG) {
             HttpLoggingInterceptor.Level.BODY
