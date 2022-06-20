@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import com.gp.cryptotrackerapp.R
 import com.gp.cryptotrackerapp.service.CoinControlService
+import com.gp.cryptotrackerapp.util.extension.isMyServiceRunning
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,11 +27,13 @@ class MainActivity : AppCompatActivity() {
      * Start [CoinControlService] to compare current data with alert value
      */
     private fun startCoinControlService() {
-        val startIntent = Intent(this, CoinControlService::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ContextCompat.startForegroundService(this, startIntent)
-        } else {
-            startService(startIntent)
+        if(!this.isMyServiceRunning(CoinControlService::class.java)){
+            val startIntent = Intent(this, CoinControlService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ContextCompat.startForegroundService(this, startIntent)
+            } else {
+                startService(startIntent)
+            }
         }
     }
 
